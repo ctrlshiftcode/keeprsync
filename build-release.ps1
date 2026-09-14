@@ -1,3 +1,4 @@
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 $ErrorActionPreference = "Stop"
 
 $projectRoot = $PSScriptRoot
