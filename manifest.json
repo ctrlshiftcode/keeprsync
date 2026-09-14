@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "KeeprSync",
   "version": "0.1.0",
-  "description": "KeeprSync is a Chrome extension that allows you to easily manage and synchronize your bookmarks across multiple computers. With KeeprSync, you can access your bookmarks from any device, ensuring that your favorite websites are always just a click away.",
+  "description": "Sync Chrome bookmarks across computers with Google Drive.",
   "icons": {
     "128": "icons/icon128.png"
   },
