@@ -8,6 +8,10 @@ Google Chrome extension for managing, organizing, and synchronizing bookmarks ac
 
 KeeprSync keeps the Chrome Bookmarks bar synchronized between computers by using a JSON file stored in the user's Google Drive.
 
+## Demo
+
+![KeeprSync demonstration](demo.gif)
+
 ## Goals
 
 - Synchronize the Chrome Bookmarks bar between computers.
