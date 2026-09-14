@@ -1,0 +1,274 @@
+:root {
+  color-scheme: dark;
+  font-family: Georgia, "Times New Roman", serif;
+  color: #f1eee7;
+  background: #151a18;
+}
+
+body {
+  margin: 0;
+  background: #151a18;
+}
+
+.settings {
+  width: min(680px, calc(100% - 40px));
+  margin: 70px auto;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: #4ea1d8;
+  font-family: Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0;
+  font-size: 42px;
+}
+
+.intro {
+  max-width: 480px;
+  color: #a9b0a9;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.panel {
+  max-width: 520px;
+  padding: 24px;
+  margin-top: 36px;
+  border: 1px solid #303b35;
+  background: #202724;
+}
+
+.panel-heading,
+.inline-heading,
+.inline-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panel-heading {
+  align-items: flex-start;
+}
+
+.disconnect-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 14px;
+}
+
+.panel-heading h2,
+.inline-heading h3 {
+  margin-bottom: 6px;
+}
+
+.muted,
+label,
+.message {
+  color: #a9b0a9;
+}
+
+.muted {
+  margin: 0;
+  line-height: 1.45;
+}
+
+.storage-choice {
+  padding: 18px 0;
+  border-top: 1px solid #303b35;
+}
+
+.storage-choice h3 {
+  margin: 0 0 14px;
+  font-size: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: Consolas, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+input,
+select {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #46534b;
+  border-radius: 3px;
+  color: #f1eee7;
+  background: #151a18;
+}
+
+.inline-form input {
+  flex: 1;
+}
+
+select {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+  color: #87938a;
+  font-family: Consolas, monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.divider::before,
+.divider::after {
+  flex: 1;
+  height: 1px;
+  background: #303b35;
+  content: "";
+}
+
+.secondary-button {
+  padding: 6px 9px;
+  color: #4ea1d8;
+  background: transparent;
+  border: 1px solid #46534b;
+}
+
+.secondary-button:hover {
+  color: #8cc8ef;
+  background: #29332e;
+}
+
+.message {
+  min-height: 18px;
+  margin: 16px 0 0;
+  font-size: 14px;
+}
+
+.message.error {
+  color: #f07c6c;
+}
+
+.auto-sync-settings {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 18px;
+  margin-top: 18px;
+  border-top: 1px solid #303b35;
+}
+
+.auto-sync-settings label {
+  margin: 0;
+}
+
+.auto-sync-settings select {
+  width: auto;
+  min-width: 130px;
+  margin: 0;
+}
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  cursor: pointer;
+}
+
+.switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.switch-track {
+  display: block;
+  width: 38px;
+  height: 22px;
+  border-radius: 11px;
+  background: #46534b;
+  transition: background 0.2s ease;
+}
+
+.switch-track::after {
+  display: block;
+  width: 16px;
+  height: 16px;
+  margin: 3px;
+  border-radius: 50%;
+  background: #f1eee7;
+  content: "";
+  transition: transform 0.2s ease;
+}
+
+.switch input:checked+.switch-track {
+  background: #2f75a8;
+}
+
+.switch input:checked+.switch-track::after {
+  transform: translateX(16px);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 22px;
+}
+
+button {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 3px;
+  color: #f1eee7;
+  background: #2f75a8;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #4ea1d8;
+}
+
+.danger-button {
+  color: #f07c6c;
+  background: transparent;
+  border: 1px solid #8c4039;
+}
+
+.danger-button:hover {
+  color: #f1eee7;
+  background: #8c4039;
+}
+
+.icon-only {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 4px;
+  font-family: sans-serif;
+  font-size: 14px;
+  line-height: 1;
+}

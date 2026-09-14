@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KeeprSync</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <main class="popup">
+    <header class="header">
+      <div>
+        <p class="eyebrow">KeeprSync</p>
+        <h1>Your bookmarks</h1>
+      </div>
+      <button id="open-options" class="icon-button" type="button" title="Open settings"
+        aria-label="Open settings">&#9881;</button>
+    </header>
+
+    <section class="status" aria-live="polite">
+      <span class="status-dot" aria-hidden="true"></span>
+      <div>
+        <strong id="sync-status">Synchronization not configured</strong>
+        <span id="bookmark-count">Loading bookmarks...</span>
+      </div>
+    </section>
+
+    <section class="sync-controls">
+      <button id="sync-bookmarks" class="sync-button" type="button">
+        <span aria-hidden="true">&#8635;</span>
+        <span>Sync bookmarks</span>
+      </button>
+      <span id="sync-result" class="sync-result" role="status" aria-live="polite"></span>
+    </section>
+
+  </main>
+  <script type="module" src="popup.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings | KeeprSync</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+
+<body>
+  <main class="settings">
+    <h1>KeeprSync Settings</h1>
+    <p class="intro">Connect Google Drive to keep your bookmarks available on every computer.</p>
+
+    <section class="panel connection-panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Google Drive</h2>
+          <p id="sync-status" class="muted">No account connected.</p>
+        </div>
+        <button id="connect-drive" type="button">Connect Google Drive</button>
+      </div>
+      <p id="connection-message" class="message" role="status" aria-live="polite"></p>
+      <div class="disconnect-actions">
+        <button id="disconnect-drive" class="danger-button icon-only" type="button" title="Disconnect Google Drive"
+          aria-label="Disconnect Google Drive" hidden>&#x21E5;</button>
+      </div>
+    </section>
+
+    <section id="storage-panel" class="panel" hidden>
+      <h2>Bookmark storage</h2>
+      <p class="muted">Choose where KeeprSync will store your bookmark data.</p>
+
+      <div class="storage-choice">
+        <h3>Create a new file</h3>
+        <label for="new-file-name">File name</label>
+        <div class="inline-form">
+          <input id="new-file-name" type="text" value="keeprsync-bookmarks.json">
+          <button id="create-file" type="button">Create file</button>
+        </div>
+      </div>
+
+      <div class="divider"><span>or select an existing file</span></div>
+
+      <div class="storage-choice">
+        <div class="inline-heading">
+          <h3>Existing KeeprSync files</h3>
+          <button id="refresh-files" class="secondary-button" type="button">Refresh</button>
+        </div>
+        <label for="existing-file">Bookmark file</label>
+        <select id="existing-file">
+          <option value="">No files found</option>
+        </select>
+        <button id="use-file" type="button">Use selected file</button>
+      </div>
+
+      <p id="file-message" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="automatic-sync-panel" class="panel" hidden>
+      <div class="panel-heading">
+        <div>
+          <h2>Automatic synchronization</h2>
+          <p class="muted">KeeprSync can synchronize your bookmarks in the background.</p>
+        </div>
+        <label class="switch" for="auto-sync-enabled">
+          <input id="auto-sync-enabled" type="checkbox">
+          <span class="switch-track" aria-hidden="true"></span>
+          <span class="sr-only">Enable automatic synchronization</span>
+        </label>
+      </div>
+      <div class="auto-sync-settings">
+        <label for="sync-interval">Run every</label>
+        <select id="sync-interval">
+          <option value="5s">5 seconds (test; browser minimum applies)</option>
+          <option value="5m">5 minutes</option>
+          <option value="10m">10 minutes</option>
+          <option value="15m">15 minutes</option>
+          <option value="30m">30 minutes</option>
+        </select>
+        <button id="save-auto-sync" type="button">Save settings</button>
+      </div>
+      <p id="auto-sync-message" class="message" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <script src="options.js"></script>
+</body>
+
+</html>
