@@ -217,6 +217,12 @@ target/
 
 The ZIP contains only `manifest.json`, `icons/`, and `src/`, with `manifest.json` at the package root. It does not include the README, development files, or OAuth secret files.
 
+
+
+## Chrome Store
+https://chromewebstore.google.com/detail/keeprsync/lfngeimffmphkjolhmfcnodhidggbpol
+
+
 ## Current limitations
 
 - There is no bookmark CRUD editor inside the KeeprSync popup.
