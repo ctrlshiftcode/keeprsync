@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "KeeprSync",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sync Chrome bookmarks across computers with Google Drive.",
   "icons": {
     "128": "icons/icon128.png"
