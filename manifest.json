@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "KeeprSync",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzu6iBCWdpYyf+M6s+di8W9+mUsQP+7f2il72hweHmOHmaa9LoD/4HbPmlnWlV71+7eLjTo1ffBSq2BrgWHm1H4saFVceEL54jjptjnJAiTS57klH9w9TVH/YCQYWAGAxotweIRAAlTAWQRpaZugKRhW/mTHH/fgYoCcSds3tyFsWDSmf/yhzt/AElSuVkewyv8GsmQRhxHVdWfqK2zYdJblt7kAdmeezz1tgW6ueeACohYztdsfaH6s1+gbvSzEMZryTQx99wNVeNVI3tqfko24FgqaCsq+Z2+n7BK8O/bKPHlYffYDtH9LcFXcf1IoDMiO4L+gL7QgOiSFNhKDjzQIDAQAB",
   "description": "Sync Chrome bookmarks across computers with Google Drive.",
   "icons": {
