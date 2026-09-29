@@ -223,7 +223,7 @@ connectButton.addEventListener("click", async () => {
       ? `${autoSettings.autoSyncInterval || 5}s`
       : `${autoSettings.autoSyncInterval || 5}m`;
   } catch (error) {
-    const detail = error?.message ? ` (${error.message})` : "";
+    const detail = error?.message ? ` (${error.message} | Extension ID: ${chrome.runtime?.id || "unknown"})` : "";
     setMessage(connectionMessage, `Unable to connect. Configure a valid Google OAuth Client ID in manifest.json.${detail}`, true);
   } finally {
     connectButton.disabled = false;
