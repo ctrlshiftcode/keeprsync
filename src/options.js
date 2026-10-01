@@ -33,17 +33,59 @@ function setMessage(element, message, isError = false) {
   element.classList.toggle("error", isError);
 }
 
-// Retrieves and caches the OAuth token for the settings page.
+// Retrieves and caches the OAuth token for the settings page using launchWebAuthFlow.
 async function getDriveToken(interactive = true) {
   if (!chrome.identity) {
     throw new Error("Chrome Identity API is unavailable.");
   }
 
-  const result = await chrome.identity.getAuthToken({ interactive });
-  if (!result?.token || typeof result.token !== "string") {
-    throw new Error("Google did not return a valid access token.");
+  const stored = await chrome.storage.local.get(["driveAccessToken", "driveTokenExpiresAt"]);
+  if (stored.driveAccessToken && stored.driveTokenExpiresAt && Date.now() < stored.driveTokenExpiresAt - 60000) {
+    accessToken = stored.driveAccessToken;
+    return accessToken;
   }
-  accessToken = result.token;
+
+  if (!interactive) {
+    throw new Error("No active Google Drive session.");
+  }
+
+  const manifest = chrome.runtime.getManifest();
+  const clientId = manifest?.oauth2?.client_id;
+  const scopes = manifest?.oauth2?.scopes?.join(" ") || "https://www.googleapis.com/auth/drive.file";
+  const redirectUri = chrome.identity.getRedirectURL();
+
+  const authUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
+  authUrl.searchParams.set("client_id", clientId);
+  authUrl.searchParams.set("response_type", "token");
+  authUrl.searchParams.set("redirect_uri", redirectUri);
+  authUrl.searchParams.set("scope", scopes);
+  authUrl.searchParams.set("prompt", "consent");
+
+  const responseUrl = await chrome.identity.launchWebAuthFlow({
+    url: authUrl.toString(),
+    interactive: true
+  });
+
+  if (!responseUrl) {
+    throw new Error("Google authentication was cancelled.");
+  }
+
+  const hashParams = new URLSearchParams(new URL(responseUrl).hash.substring(1));
+  const token = hashParams.get("access_token");
+  if (!token) {
+    const errorDesc = hashParams.get("error_description") || hashParams.get("error") || "Authentication failed.";
+    throw new Error(errorDesc);
+  }
+
+  const expiresInSeconds = Number.parseInt(hashParams.get("expires_in") || "3600", 10);
+  const expiresAt = Date.now() + (expiresInSeconds * 1000);
+
+  accessToken = token;
+  await chrome.storage.local.set({
+    driveAccessToken: token,
+    driveTokenExpiresAt: expiresAt
+  });
+
   return accessToken;
 }
 
@@ -175,15 +217,11 @@ async function selectFile(fileId) {
 
 // Clears local authentication and synchronization metadata without deleting Drive data.
 async function disconnectDrive() {
-  const token = accessToken;
-
-  if (token) {
-    await chrome.identity.removeCachedAuthToken({ token });
-  }
-
   accessToken = null;
   await chrome.storage.local.remove([
     "driveFileId",
+    "driveAccessToken",
+    "driveTokenExpiresAt",
     "lastSyncedBookmarks",
     "lastSyncAt",
     "lastSyncStatus",

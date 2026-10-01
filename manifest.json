@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "KeeprSync",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzu6iBCWdpYyf+M6s+di8W9+mUsQP+7f2il72hweHmOHmaa9LoD/4HbPmlnWlV71+7eLjTo1ffBSq2BrgWHm1H4saFVceEL54jjptjnJAiTS57klH9w9TVH/YCQYWAGAxotweIRAAlTAWQRpaZugKRhW/mTHH/fgYoCcSds3tyFsWDSmf/yhzt/AElSuVkewyv8GsmQRhxHVdWfqK2zYdJblt7kAdmeezz1tgW6ueeACohYztdsfaH6s1+gbvSzEMZryTQx99wNVeNVI3tqfko24FgqaCsq+Z2+n7BK8O/bKPHlYffYDtH9LcFXcf1IoDMiO4L+gL7QgOiSFNhKDjzQIDAQAB",
   "description": "Sync Chrome bookmarks across computers with Google Drive.",
   "icons": {
@@ -18,14 +18,15 @@
     "https://www.googleapis.com/*"
   ],
   "oauth2": {
-    "client_id": "760604765265-2nq2ddvrs8iiggf2detslscu4eemgrto.apps.googleusercontent.com",
+    "client_id": "760604765265-22fvvefb8ithk64v94e6ohv4npn4dar3.apps.googleusercontent.com",
     "scopes": [
       "https://www.googleapis.com/auth/drive.file"
     ]
   },
   "action": {
     "default_title": "Open KeeprSync",
-    "default_popup": "src/popup.html",
+    "default_popup": 
+    "src/popup.html",
     "default_icon": {
       "128": "icons/icon128.png"
     }

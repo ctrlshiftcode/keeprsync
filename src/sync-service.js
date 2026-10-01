@@ -205,19 +205,62 @@ function flattenBookmarks(nodes) {
   });
 }
 
-// Retrieves an OAuth token for interactive or background use.
-async function getDriveToken(interactive) {
-  const result = await chrome.identity.getAuthToken({ interactive });
-  if (!result?.token || typeof result.token !== "string") {
-    throw new Error("Google did not return a valid access token.");
+// Retrieves an OAuth token for interactive or background use using launchWebAuthFlow.
+async function getDriveToken(interactive = true) {
+  const stored = await chrome.storage.local.get(["driveAccessToken", "driveTokenExpiresAt"]);
+  if (stored.driveAccessToken && stored.driveTokenExpiresAt && Date.now() < stored.driveTokenExpiresAt - 60000) {
+    accessToken = stored.driveAccessToken;
+    return accessToken;
   }
-  accessToken = result.token;
+
+  if (!interactive) {
+    throw new Error("No active Google Drive session. Please connect in Settings.");
+  }
+
+  const manifest = chrome.runtime.getManifest();
+  const clientId = manifest?.oauth2?.client_id;
+  const scopes = manifest?.oauth2?.scopes?.join(" ") || "https://www.googleapis.com/auth/drive.file";
+  const redirectUri = chrome.identity.getRedirectURL();
+
+  const authUrl = new URL("https://accounts.google.com/o/oauth2/v2/auth");
+  authUrl.searchParams.set("client_id", clientId);
+  authUrl.searchParams.set("response_type", "token");
+  authUrl.searchParams.set("redirect_uri", redirectUri);
+  authUrl.searchParams.set("scope", scopes);
+  authUrl.searchParams.set("prompt", "consent");
+
+  const responseUrl = await chrome.identity.launchWebAuthFlow({
+    url: authUrl.toString(),
+    interactive: true
+  });
+
+  if (!responseUrl) {
+    throw new Error("Google authentication was cancelled.");
+  }
+
+  const hashParams = new URLSearchParams(new URL(responseUrl).hash.substring(1));
+  const token = hashParams.get("access_token");
+  if (!token) {
+    const errorDesc = hashParams.get("error_description") || hashParams.get("error") || "Authentication failed.";
+    throw new Error(errorDesc);
+  }
+
+  const expiresInSeconds = Number.parseInt(hashParams.get("expires_in") || "3600", 10);
+  const expiresAt = Date.now() + (expiresInSeconds * 1000);
+
+  accessToken = token;
+  await chrome.storage.local.set({
+    driveAccessToken: token,
+    driveTokenExpiresAt: expiresAt
+  });
+
   return accessToken;
 }
 
 // Clears the in-memory token when the user disconnects the account.
-export function clearDriveToken() {
+export async function clearDriveToken() {
   accessToken = null;
+  await chrome.storage.local.remove(["driveAccessToken", "driveTokenExpiresAt"]);
 }
 
 // Sends an authenticated request to the Google Drive API.
@@ -228,6 +271,14 @@ async function driveRequest(url, options = {}, interactive = true) {
     ...options,
     headers: { Authorization: `Bearer ${token}`, ...options.headers }
   });
+
+  if (response.status === 401 && !options._retried) {
+    accessToken = null;
+    await chrome.storage.local.remove(["driveAccessToken", "driveTokenExpiresAt"]);
+    if (interactive) {
+      return driveRequest(url, { ...options, _retried: true }, interactive);
+    }
+  }
 
   if (!response.ok) {
     throw new Error(`Google Drive returned ${response.status}.`);
